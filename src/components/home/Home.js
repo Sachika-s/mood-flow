@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import db from '../databasePositive';  // Import Dexie database
 import MoodScale from '../Calendar/MoodScale';  // Import MoodScale component
-import SimpleCalendar from '../Calendar/Calendar';  // Import SimpleCalendar component
 
 const Home = () => {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -121,8 +120,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Simple Calendar */}
-      <SimpleCalendar selectedMood={selectedMood} savedEntries={savedEntries} />
     </div>
   );
 };

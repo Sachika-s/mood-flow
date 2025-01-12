@@ -28,6 +28,14 @@ const Header = () => {
           Calendar
         </NavLink>
         <NavLink
+          exact
+          to="/insights"
+          activeClassName="text-blue-500 font-bold"
+          className="text-gray-700 font-semibold hover:text-gray-900"
+        >
+          AI Insights
+        </NavLink>
+        <NavLink
           to="/about"
           activeClassName="text-blue-500 font-semibold"
           className="text-gray-700 font-semibold hover:text-gray-900"

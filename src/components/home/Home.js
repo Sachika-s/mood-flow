@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import db from '../databasePositive';  // Import Dexie database
-import MoodScale from '../MoodScale';  // Import MoodScale component
+import db from '../databasePositive';
+import MoodScale from '../MoodScale';
+import axios from 'axios';
 
 const Home = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [response, setResponse] = useState('');
-  const [date, setDate] = useState(new Date()); // Set default to current date
-  const [advice, setAdvice] = useState(''); // State to store AI-generated advice
-  const [loadingAdvice, setLoadingAdvice] = useState(false); // State to handle loading
+  const [date, setDate] = useState(new Date());
+  const [aiAdvice, setAiAdvice] = useState(null); // To store AI advice for Insights
 
-  // Function to handle the mood selection from the MoodScale
-  const handleMoodSelect = (mood) => {
-    setSelectedMood(mood);  // Set the selected mood
-  };
+  const handleMoodSelect = (mood) => setSelectedMood(mood);
 
-  // Save the journal entry to Dexie database
   const handleSave = async () => {
     if (!response.trim()) {
       alert('Please write something before saving.');
@@ -26,15 +22,24 @@ const Home = () => {
     }
 
     const newEntry = {
-      date: date.toDateString(),  // Convert selected date to string
-      mood: selectedMood,         // Selected mood
-      response: response,         // User's journal response
+      date: date.toDateString(),
+      mood: selectedMood,
+      response,
     };
 
-    // Save to Dexie database
     await db.entries.add(newEntry);
 
-    // Clear input fields after submission
+    // Fetch AI advice
+    try {
+      const res = await axios.post('http://localhost:5001/generate-advice', {
+        entry: response,
+      });
+      console.log('AI Advice:', res.data);
+      setAiAdvice(res.data.advice || 'No advice generated.');
+    } catch (err) {
+      console.error('Failed to fetch AI advice:', err);
+    }
+
     setResponse('');
     setSelectedMood(null);
   };
@@ -43,16 +48,12 @@ const Home = () => {
     <div className="h-min-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="flex flex-col items-center justify-center w-full p-6 mt-5">
         <div className="text-[#17475a] text-5xl font-bold pl-5 text-center">
-          Hello, Senuni Kavisinghe!
+          Hello! Welcome to your homepage~
         </div>
         <div className="bg-white opacity-85 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left flex-wrap">
-          🌸 Welcome to your cozy space of self-care and reflection. Take a moment to check in with yourself—how are you feeling today? Simply tap on your mood to begin. 🌿
-          <br /> <br />
-          Once you choose your mood, a gentle ten-minute timer will start, giving you the perfect window to pause, reflect, and journal about your day. Let the soft pastel hues guide you into a calm, nurturing flow—mindful journaling, soothing thoughts, and a chance to reconnect with your heart. <br /> <br />
-          Take a deep breath, embrace the present moment, and let your creativity flow. 💫
+          🌸 Take a moment to check in with yourself. Tap on your mood and journal your thoughts.
         </div>
 
-        {/* MoodScale Component */}
         <MoodScale onMoodSelect={handleMoodSelect} />
 
         <div className="grid max-w-5xl w-full grid-cols-12 gap-6">

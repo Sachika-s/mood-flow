@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import db from '../databasePositive';
 
 const moodColors = {

@@ -7,6 +7,56 @@ const cohere = new CohereClientV2({
   token: 'hl1ibuL2p5J4d46NmiH5vG8lyxvkYI0AJqO7KNYG',
 });
 
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+
+// Endpoint to handle journal entry and generate advice
+app.post('/generate-advice', async (req, res) => {
+  const { entry } = req.body;
+
+  if (!entry) {
+    console.error('No entry provided in the request body.');
+    return res.status(400).json({ error: 'Journal entry is required.' });
+  }
+
+  try {
+    const response = await cohere.chat({
+      model: 'command-r-plus',
+      messages: [
+        {
+          role: 'user',
+          content: `The user is feeling: "${entry}". Provide thoughtful, empathetic but short advice to help them feel better.`,
+        },
+      ],
+    });
+
+    const advice = response.message.content[0].text.trim();
+    res.json({ advice });
+  } catch (error) {
+    console.error('Error while calling Cohere:', error);
+    res.status(500).json({ error: 'Error connecting to Cohere API.' });
+  }
+});
+
+const PORT = 5001;
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
+});
+
+
+
+
+
+/*const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { CohereClientV2 } = require('cohere-ai');
+
+const cohere = new CohereClientV2({
+  token: 'hl1ibuL2p5J4d46NmiH5vG8lyxvkYI0AJqO7KNYG',
+});
+
 
 // Initialize Cohere with your API key
 //cohere.init('deD0tkNH15gVpwNLeQMcVWg1iTLy9gpGSvUuXXBA');  // Replace with your actual Cohere API key
@@ -27,15 +77,6 @@ app.post('/generate-advice', async (req, res) => {
 
   try {
     console.log('Received journal entry:', entry);  // Log the entry
-
-    /*// Generate advice using Cohere
-    const response = await cohere.generate({
-      model: 'command-xlarge-nightly',  // You can change the model if needed
-      prompt: `The user wrote: "${entry}". Provide thoughtful and empathetic advice.`,
-      max_tokens: 100,
-      temperature: 0.7,
-      length: 100,
-    });*/
 
     const response = await cohere.chat({
       model: 'command-r-plus',
@@ -70,4 +111,4 @@ app.post('/generate-advice', async (req, res) => {
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
-});
+});*/

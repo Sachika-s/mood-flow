@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';  // Import Link from react-router-do
 
 const Header = () => {
     return (
-        <div className="flex justify-between items-center p-5 bg-[#87CEEB] bg-opacity-55 rounded-xl] shadow sticky top-0 z-10">
+        <div className="flex justify-between items-center p-5 bg-[#87CEEB] bg-opacity-55 rounded-xl] shadow top-0 z-10">
             <h1 className="text-2xl font-bold text-gray-800">Mood Flow</h1>
             <div className="space-x-6">
                 <NavLink 

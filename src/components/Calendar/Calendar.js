@@ -61,6 +61,9 @@ function SimpleCalendar() {
   return (
     <div className="h-min-screen bg-cover text-xl bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="w-full">
+        <div className="text-[#17475a] text-5xl font-bold -mb-7 mt-10 text-center">
+          Your Mood at a Glance...
+        </div>
         <div className=" pl-52 pr-52 pt-16 pb-4 rounded-lg">
           <Calendar
               onChange={setDate}

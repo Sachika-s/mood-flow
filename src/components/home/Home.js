@@ -7,6 +7,8 @@ const Home = () => {
   const [response, setResponse] = useState('');
   const [savedEntries, setSavedEntries] = useState([]);
   const [date, setDate] = useState(new Date()); // Set default to current date
+  const [advice, setAdvice] = useState(''); // State to store AI-generated advice
+  const [loadingAdvice, setLoadingAdvice] = useState(false); // State to handle loading
 
   // Fetch saved journal entries on component load
   useEffect(() => {
@@ -20,7 +22,6 @@ const Home = () => {
   // Function to handle the mood selection from the MoodScale
   const handleMoodSelect = (mood) => {
     setSelectedMood(mood);  // Set the selected mood
-    // No need to create a journal entry here anymore
   };
 
   // Save the journal entry to Dexie database
@@ -57,6 +58,39 @@ const Home = () => {
     setSavedEntries((prevEntries) => prevEntries.filter((entry) => entry.date !== dateString));
   };
 
+  // Function to get AI-generated advice using Cohere
+  const handleGetAdvice = async () => {
+    if (!response.trim()) {
+      alert('Please write something to get advice.');
+      return;
+    }
+
+    setLoadingAdvice(true); // Start loading
+    setAdvice(''); // Clear previous advice
+
+    try {
+      const res = await fetch('http://localhost:5000/generate-advice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ entry: response }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to get advice');
+      }
+
+      const data = await res.json();
+      setAdvice(data.advice); // Set the received advice
+    } catch (error) {
+      console.error('Error fetching advice:', error);
+      alert('Error fetching advice. Please try again.');
+    } finally {
+      setLoadingAdvice(false); // Stop loading
+    }
+  };
+
   return (
     <div className="h-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="flex flex-col items-center justify-center w-full p-6 mt-5">
@@ -65,9 +99,6 @@ const Home = () => {
         </div>
         <div className="bg-white opacity-75 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left flex-wrap">
           🌸 Welcome to your cozy space of self-care and reflection. Take a moment to check in with yourself—how are you feeling today? Simply tap on your mood to begin. 🌿
-          <br /> <br />
-          Once you choose your mood, a gentle ten-minute timer will start, giving you the perfect window to pause, reflect, and journal about your day. Let the soft pastel hues guide you into a calm, nurturing flow—mindful journaling, soothing thoughts, and a chance to reconnect with your heart. <br /> <br />
-          Take a deep breath, embrace the present moment, and let your creativity flow. 💫
         </div>
 
         {/* MoodScale Component */}
@@ -92,8 +123,26 @@ const Home = () => {
             >
               Submit
             </button>
+
+            {/* Get Advice Button */}
+            <button
+              onClick={handleGetAdvice}
+              className="bg-[#FFB6C1] text-white text-md font-bold p-4 pt-6 pb-6 rounded-xl hover:bg-[#c97a8d] w-full mt-4"
+            >
+              Get Advice
+            </button>
           </div>
         </div>
+
+        {/* Display AI Advice */}
+        {loadingAdvice ? (
+          <div className="mt-6 text-gray-700">Loading advice...</div>
+        ) : advice ? (
+          <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
+            <h3 className="text-lg font-bold">AI Advice:</h3>
+            <p>{advice}</p>
+          </div>
+        ) : null}
 
         {/* Display Saved Journal Entries */}
         <div className="mt-8 w-full text-gray-800">
@@ -119,7 +168,6 @@ const Home = () => {
           )}
         </div>
       </div>
-
     </div>
   );
 };

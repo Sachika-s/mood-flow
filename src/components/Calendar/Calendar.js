@@ -6,12 +6,12 @@ import db from '../databasePositive';  // Import Dexie database
 
 // Define colors for each mood
 const moodColors = {
-  Happy: 'green',
-  Sad: 'blue',
-  Neutral: 'yellow',
-  Tired: 'purple',
-  Angry: 'red',
-  Relaxed: 'turquoise',
+  Happy: '#b4e791',
+  Sad: '#91cae7',
+  Neutral: '#fffe94',
+  Tired: '#a5a2ff',
+  Angry: '#ff6d6d',
+  Relaxed: '#a1ffe9',
 };
 
 function SimpleCalendar({ selectedMood, savedEntries }) {
@@ -76,6 +76,29 @@ function SimpleCalendar({ selectedMood, savedEntries }) {
     }
   };
 
+  // Create the Mood Legend
+  const renderMoodLegend = () => (
+    <div className="mood-legend">
+      <h3 className="text-xl font-semibold">Mood Legend</h3>
+      <div className="flex flex-wrap">
+        {Object.keys(moodColors).map((mood) => (
+          <div key={mood} className="mood-legend-item flex items-center mr-4 mt-2">
+            <div
+              style={{
+                backgroundColor: moodColors[mood],
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                marginRight: '8px',
+              }}
+            />
+            <span>{mood}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="calendar-container">
       <Calendar
@@ -85,6 +108,9 @@ function SimpleCalendar({ selectedMood, savedEntries }) {
         tileClassName={tileClassName}
         tileContent={tileContent}
       />
+
+      {/* Mood Legend */}
+      {renderMoodLegend()}
     </div>
   );
 }

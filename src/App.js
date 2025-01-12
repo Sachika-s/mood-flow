@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header.js';  // Import the header
 import Home from './components/home/Home.js';      // Import the Home component
 import Calendar from './components/Calendar/Calendar.js';  // Import the Calendar component
-import Profile from './components/Profile';   // Import the Profile component
+import Profile from './components/Profile/Profile.js';   // Import the Profile component
 import About from './components/About';      // Import the About component
 import './App.css';
 

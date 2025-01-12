@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'; // Import Link from react-router-dom
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center p-5 bg-[#87CEEB] bg-opacity-55 rounded-xl shadow top-0 z-10">
+    <div className="flex justify-between items-center p-5 bg-[#87CEEB] bg-opacity-55 shadow top-0 z-10">
       {/* Logo and Title */}
       <div className="flex items-center">
         <img src="logo.webp" alt="Mood Flow Logo" className="h-12 w-12" />

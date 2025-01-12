@@ -4,7 +4,7 @@ import Header from './components/header/Header.js';  // Import the header
 import Home from './components/home/Home.js';      // Import the Home component
 import Calendar from './components/Calendar/Calendar.js';  // Import the Calendar component
 import Profile from './components/Profile';   // Import the Profile component
-import About from './components/About';      // Import the About component
+import Insights from './components/Insights.js';      // Import the About component
 import './App.css';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />  {/* Home page */}
           <Route path="/calendar" element={<Calendar />} />  {/* Calendar page */}
           <Route path="/profile" element={<Profile />} />  {/* Profile page */}
-          <Route path="/about" element={<About />} />  {/* About page */}
+          <Route path="/insights" element={<Insights />} />  {/* Insights page */}
         </Routes>
       </div>
     </Router>

@@ -1,90 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './Calendar.css';  // Custom CSS for styling
-import db from '../databasePositive';  // Import Dexie database
+import db from '../databasePositive';
 
-// Define colors for each mood
 const moodColors = {
-  Happy: 'green',
-  Sad: 'blue',
-  Neutral: 'yellow',
-  Tired: 'purple',
-  Angry: 'red',
-  Relaxed: 'turquoise',
+  Happy: 'bg-green-400',
+  Sad: 'bg-blue-400',
+  Neutral: 'bg-yellow-300',
+  Tired: 'bg-purple-500',
+  Angry: 'bg-red-400',
+  Relaxed: 'bg-teal-400',
 };
 
-function SimpleCalendar({ selectedMood, savedEntries }) {
+function SimpleCalendar() {
   const [date, setDate] = useState(new Date());
-  const [moodDates, setMoodDates] = useState({});  // Store selected mood for each date
+  const [moodDates, setMoodDates] = useState({});
+  const [entriesForSelectedDate, setEntriesForSelectedDate] = useState([]);
 
-  // Fetch the saved moods from the Dexie database for each date
   useEffect(() => {
     const fetchMoodDates = async () => {
       const entries = await db.entries.toArray();
       const moodMap = {};
       entries.forEach(entry => {
-        moodMap[entry.date] = entry.mood;  // Map date to mood
+        moodMap[entry.date] = entry.mood;
       });
-      setMoodDates(moodMap);  // Update moodDates state
+      setMoodDates(moodMap);
     };
     fetchMoodDates();
-  }, [savedEntries]);
+  }, []);
 
-  // Function to handle day clicks
+  const fetchEntriesForDate = async (dateString) => {
+    const entries = await db.entries.where('date').equals(dateString).toArray();
+    setEntriesForSelectedDate(entries);
+  };
+
   const handleDateClick = (value) => {
     const dateString = value.toDateString();
-    setMoodDates((prevMoodDates) => ({
-      ...prevMoodDates,
-      [dateString]: selectedMood,  // Store the selected mood for this day
-    }));
-
-    // Save the selected mood to Dexie database for the clicked date
-    db.entries.put({
-      date: dateString,
-      mood: selectedMood,
-      response: '', // Can be left empty or add logic to store response
-    });
+    setDate(value);
+    fetchEntriesForDate(dateString);
   };
 
-  // Function to get the class name for each tile
-  const tileClassName = ({ date, view }) => {
-    if (view === 'month') {
-      return 'calendar-tile';  // Apply custom class to each tile
-    }
+  const handleDelete = async (entryId) => {
+    await db.entries.delete(entryId);
+    setEntriesForSelectedDate(prevEntries => prevEntries.filter(entry => entry.id !== entryId));
   };
 
-  // Function to add content (circle) to each tile
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
       const dateString = date.toDateString();
-     
-      // Check if this date has a mood color assigned
       const moodForDay = moodDates[dateString];
-     
+
       return (
         <div
-          style={{
-            backgroundColor: moodForDay ? moodColors[moodForDay] : 'transparent',
-            borderRadius: '50%',
-            height: '20px',
-            width: '20px',
-            margin: 'auto',
-          }}
+          className={`w-2 h-2 mt-3 rounded-full mx-auto ${moodForDay ? moodColors[moodForDay] : 'bg-transparent'}`}
         />
       );
     }
   };
 
   return (
-    <div className="calendar-container">
-      <Calendar
-        onChange={setDate}
-        value={date}
-        onClickDay={handleDateClick}  // Handle the date click
-        tileClassName={tileClassName}
-        tileContent={tileContent}
-      />
+    <div className="h-min-screen bg-cover text-xl bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
+      <div className="w-full">
+        <div className=" pl-52 pr-52 pt-16 pb-4 rounded-lg">
+          <Calendar
+              onChange={setDate}
+              value={date}
+              onClickDay={handleDateClick}
+              tileContent={tileContent}
+              tileClassName="react-calendar__tile aspect-square text-xl"
+              className="w-full rounded-xl"
+            />
+        </div>
+
+        <div className="ml-52 mt-6 mr-52 text-gray-800">
+          <h3 className="text-2xl font-semibold mb-4">Journal Entries for {date.toDateString()}</h3>
+          {entriesForSelectedDate.length === 0 ? (
+            <p className="text-lg text-gray-500 pb-9">No journal entries for this day.</p>
+          ) : (
+            <ul className="space-y-4 pb-7">
+              {entriesForSelectedDate.map((entry, index) => (
+                <li key={index} className="bg-white p-5 rounded-lg shadow-md border border-gray-200">
+                  <div className="font-semibold text-lg text-gray-900">{entry.mood}</div>
+                  <p className="mt-2 text-gray-700">{entry.response}</p>
+                  <button
+                    onClick={() => handleDelete(entry.id)}
+                    className="mt-4 text-red-500 hover:text-red-700 text-sm"
+                  >
+                    Delete Entry
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

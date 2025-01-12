@@ -4,21 +4,12 @@ import 'react-calendar/dist/Calendar.css';
 import db from '../databasePositive';
 
 const moodColors = {
-<<<<<<< HEAD
   Happy: '#b4e791',
   Sad: '#91cae7',
   Neutral: '#fffe94',
   Tired: '#a5a2ff',
   Angry: '#ff6d6d',
   Relaxed: '#a1ffe9',
-=======
-  Happy: 'bg-green-400',
-  Sad: 'bg-blue-400',
-  Neutral: 'bg-yellow-300',
-  Tired: 'bg-purple-500',
-  Angry: 'bg-red-400',
-  Relaxed: 'bg-teal-400',
->>>>>>> 04a616a55a8c885a4461f479e5699b4000d5cb44
 };
 
 function SimpleCalendar() {
@@ -91,19 +82,6 @@ function SimpleCalendar() {
   );
 
   return (
-<<<<<<< HEAD
-    <div className="calendar-container">
-      <Calendar
-        onChange={setDate}
-        value={date}
-        onClickDay={handleDateClick}  // Handle the date click
-        tileClassName={tileClassName}
-        tileContent={tileContent}
-      />
-
-      {/* Mood Legend */}
-      {renderMoodLegend()}
-=======
     <div className="h-min-screen bg-cover text-xl bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="w-full">
         <div className="text-[#17475a] text-5xl font-bold -mb-7 mt-10 text-center">
@@ -142,7 +120,6 @@ function SimpleCalendar() {
           )}
         </div>
       </div>
->>>>>>> 04a616a55a8c885a4461f479e5699b4000d5cb44
     </div>
   );
 }

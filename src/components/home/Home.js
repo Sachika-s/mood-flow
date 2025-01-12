@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import db from '../databasePositive';  // Import Dexie database
-import MoodScale from '../Calendar/MoodScale';  // Import MoodScale component
+import MoodScale from '../MoodScale';  // Import MoodScale component
 
 const Home = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [response, setResponse] = useState('');
-  const [savedEntries, setSavedEntries] = useState([]);
   const [date, setDate] = useState(new Date()); // Set default to current date
   const [advice, setAdvice] = useState(''); // State to store AI-generated advice
   const [loadingAdvice, setLoadingAdvice] = useState(false); // State to handle loading
-
-  // Fetch saved journal entries on component load
-  useEffect(() => {
-    const fetchEntries = async () => {
-      const entries = await db.entries.toArray();
-      setSavedEntries(entries);  // Store them in state
-    };
-    fetchEntries();
-  }, []);
 
   // Function to handle the mood selection from the MoodScale
   const handleMoodSelect = (mood) => {
@@ -44,14 +34,12 @@ const Home = () => {
     // Save to Dexie database
     await db.entries.add(newEntry);
 
-    // Update the UI state
-    setSavedEntries((prevEntries) => [newEntry, ...prevEntries]);
-
     // Clear input fields after submission
     setResponse('');
     setSelectedMood(null);
   };
 
+<<<<<<< HEAD
   // Function to handle deleting journal entries
   const handleDelete = async (dateString) => {
     await db.entries.where('date').equals(dateString).delete();
@@ -91,13 +79,15 @@ const Home = () => {
     }
   };
 
+=======
+>>>>>>> 04a616a55a8c885a4461f479e5699b4000d5cb44
   return (
-    <div className="h-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
+    <div className="h-min-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="flex flex-col items-center justify-center w-full p-6 mt-5">
-        <div className="text-[#17475a] text-5xl font-bold pl-5 text-center">
+        <div className="text-[#17475a] text-5xl font-bold pl-5 -mt-2 mb-1 text-center">
           Hello, Senuni Kavisinghe!
         </div>
-        <div className="bg-white opacity-75 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left flex-wrap">
+        <div className="bg-white opacity-85 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left flex-wrap">
           🌸 Welcome to your cozy space of self-care and reflection. Take a moment to check in with yourself—how are you feeling today? Simply tap on your mood to begin. 🌿
         </div>
 
@@ -107,7 +97,7 @@ const Home = () => {
         <div className="grid max-w-5xl w-full grid-cols-12 gap-6">
           <div className="col-span-8">
             <textarea
-              className="w-full p-3 opacity-75 rounded-lg text-gray-700 text-lg focus:ring-blue-400"
+              className="w-full p-3 opacity-85 rounded-lg text-gray-700 text-lg focus:ring-blue-400"
               rows="9"
               value={response}
               onChange={(e) => setResponse(e.target.value)}
@@ -116,10 +106,10 @@ const Home = () => {
           </div>
 
           <div className="col-span-4 flex justify-center flex-col gap-6">
-            <img src="/icon.png" alt="Description of the image" className="rounded-lg max-w-full h-auto" />
+            <img src="/icon.png" alt="Cute pastel character" className="rounded-lg max-w-full h-auto" />
             <button
               onClick={handleSave}
-              className="bg-[#87CEEB] text-white text-md font-bold p-4 pt-6 pb-6 rounded-xl hover:bg-[#3884a2] w-full"
+              className="bg-[#87CEEB] text-white font-bold p-4 rounded-xl hover:bg-[#3884a2] w-full"
             >
               Submit
             </button>
@@ -133,6 +123,7 @@ const Home = () => {
             </button>
           </div>
         </div>
+<<<<<<< HEAD
 
         {/* Display AI Advice */}
         {loadingAdvice ? (
@@ -167,6 +158,8 @@ const Home = () => {
             </ul>
           )}
         </div>
+=======
+>>>>>>> 04a616a55a8c885a4461f479e5699b4000d5cb44
       </div>
     </div>
   );

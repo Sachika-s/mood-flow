@@ -48,13 +48,13 @@ const Insights = () => {
   };
 
   return (
-    <div className="h-min-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/insights-background.jpg")' }}>
+    <div className="h-min-screen h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="flex flex-col items-center justify-center w-full p-6 mt-5">
         <div className="text-[#17475a] text-5xl font-bold pl-5 text-center">
           AI Insights
         </div>
 
-        <div className="bg-white opacity-85 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left">
+        <div className="bg-white opacity-85 rounded-xl p-5 mt-6 text-gray-700 w-full max-w-5xl text-center">
           {latestEntry ? (
             <>
               <h3 className="text-xl font-bold text-[#17475a] mb-3">Your Latest Journal Entry:</h3>
@@ -68,7 +68,7 @@ const Insights = () => {
         <button
           onClick={fetchAIAdvice}
           disabled={loading || !latestEntry}
-          className="bg-[#87CEEB] text-white font-bold p-4 rounded-xl hover:bg-[#3884a2] w-full mt-6"
+          className="bg-[#87CEEB] text-white font-bold p-4 rounded-xl hover:bg-[#3884a2] w-full max-w-5xl mt-6"
         >
           {loading ? 'Generating Advice...' : 'Get AI Insights'}
         </button>

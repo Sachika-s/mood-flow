@@ -21,7 +21,7 @@ const About = () => {
         {/* Team Members Section */}
         <div className="mt-12 bg-white opacity-85 p-8 rounded-lg shadow-lg mb-10">
           <h2 className="text-5xl font-bold text-center text-[#17475a] pb-4 mb-7">Meet the Team</h2>
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid grid-cols-3 gap-8">
             {/* Member 1 */}
             <div className="text-center">
               <img
@@ -54,18 +54,6 @@ const About = () => {
               <h3 className="text-xl font-semibold">Stella Liu</h3>
               <p className="text-gray-500">Software Developer</p>
             </div>
-            
-            {/* Member 4 */}
-            <div className="text-center">
-              <img
-                src="/sachika-profile.jpg"
-                alt="Team Member 2"
-                className="aspect-square object-cover rounded-full mb-4"
-              />
-              <h3 className="text-xl font-semibold">Swetha Krishnan</h3>
-              <p className="text-gray-500">Software Developer</p>
-            </div>
-            
           </div>
         </div>
       </div>

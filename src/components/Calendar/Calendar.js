@@ -51,24 +51,27 @@ function SimpleCalendar() {
 
       return (
         <div
-          className={`w-2 h-2 mt-3 rounded-full mx-auto ${moodForDay ? moodColors[moodForDay] : 'bg-transparent'}`}
+          className={`w-3 h-3 mt-5 rounded-full mx-auto ${moodForDay ? moodColors[moodForDay] : 'bg-transparent'}`}
         />
       );
     }
   };
 
   return (
-    <div className="h-min-screen bg-cover text-xl bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
+    <div className="h-min-screen bg-cover text-xl bg-center flex items-center justify-center" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="w-full">
-        <div className=" pl-52 pr-52 pt-16 pb-4 rounded-lg">
-          <Calendar
-              onChange={setDate}
-              value={date}
-              onClickDay={handleDateClick}
-              tileContent={tileContent}
-              tileClassName="react-calendar__tile aspect-square text-xl"
-              className="w-full rounded-xl"
-            />
+        <div className="text-[#17475a] text-5xl font-bold -mb-7 mt-10 text-center">
+            Your Mood at a Glance...
+        </div>
+        <div className=" pl-52 pr-52 pt-16 pb-4 items-center flex justify-center rounded-lg">
+        <Calendar
+          onChange={setDate}
+          value={date}
+          onClickDay={handleDateClick}
+          tileContent={tileContent}
+          tileClassName="react-calendar__tile aspect-square text-xl hover:bg-[#ffc2d1] focus:bg-blue-300 transition"
+          className="w-full rounded-xl bg-white opacity-75 p-8"
+        />
         </div>
 
         <div className="ml-52 mt-6 mr-52 text-gray-800">

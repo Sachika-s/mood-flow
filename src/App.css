@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Center the weekdays (days of the week) */
+.react-calendar__month-view__weekdays {
+    @apply flex justify-center items-center;
+  }
+  
+  /* Center the month header (month and year) */
+  .react-calendar__month-view__header {
+    @apply text-center;
+  }
+  
+  /* Center the day tiles themselves */
+  .react-calendar__tile {
+    @apply text-center;
+  }
+  

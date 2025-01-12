@@ -42,11 +42,14 @@ const Home = () => {
   return (
     <div className="h-min-screen bg-cover bg-center flex items-start justify-start" style={{ backgroundImage: 'url("/home-background.jpg")' }}>
       <div className="flex flex-col items-center justify-center w-full p-6 mt-5">
-        <div className="text-[#17475a] text-5xl font-bold pl-5 -mt-2 mb-1 text-center">
+        <div className="text-[#17475a] text-5xl font-bold pl-5 text-center">
           Hello, Senuni Kavisinghe!
         </div>
         <div className="bg-white opacity-85 rounded-xl p-5 mt-6 text-gray-700 max-w-5xl text-left flex-wrap">
           🌸 Welcome to your cozy space of self-care and reflection. Take a moment to check in with yourself—how are you feeling today? Simply tap on your mood to begin. 🌿
+          <br /> <br />
+          Once you choose your mood, a gentle ten-minute timer will start, giving you the perfect window to pause, reflect, and journal about your day. Let the soft pastel hues guide you into a calm, nurturing flow—mindful journaling, soothing thoughts, and a chance to reconnect with your heart. <br /> <br />
+          Take a deep breath, embrace the present moment, and let your creativity flow. 💫
         </div>
 
         {/* MoodScale Component */}

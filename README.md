@@ -1,10 +1,12 @@
-# Getting Started with Create React App
+# A short demo showcasing the project in action
+
+[Watch now!](https://www.youtube.com/watch?v=Fna-BoyrxAE)
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Here’s a quick walkthrough video showcasing the project in action
-
-[Watch now!](https://www.youtube.com/watch?v=Fna-BoyrxAE)
 
 ## Available Scripts
 
